@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  stock-agent:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
+      - STOCKS_TO_MONITOR=${STOCKS_TO_MONITOR:-AAPL,MSFT,GOOGL,AMZN,NVDA}
+      - CHECK_FREQUENCY_HOURS=${CHECK_FREQUENCY_HOURS:-4}
+      - ENVIRONMENT=development
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    env_file:
+      - .env

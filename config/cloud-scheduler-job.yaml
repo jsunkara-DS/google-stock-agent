@@ -1,0 +1,12 @@
+apiVersion: cloudscheduler.googleapis.com/v1
+kind: Job
+metadata:
+  name: stock-agent-batch-job
+spec:
+  schedule: "0 8,13,16 * * 1-5"  # 8am, 1pm, 4pm on weekdays (market hours)
+  timeZone: "America/New_York"
+  description: "Batch process stock analysis during market hours"
+  pubsubTarget:
+    topicName: "projects/PROJECT_ID/topics/stock-agent-trigger"
+    attributes:
+      action: "batch_process"
